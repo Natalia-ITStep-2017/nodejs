@@ -1,15 +1,15 @@
 
-import contactService from '../models/contacts.js'
+import Contact from '../models/contact.js'
 import { httpError } from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js"
 
 const getAllContacts = async (_, res) => {
-  const result = await contactService.listContacts();
+  const result = await Contact.find({});
   res.json(result)
 }
 
-const getContactById = async (req, res, next) => {
-  const result = await contactService.getContactById(req.params.id);
+const getContactById = async (req, res) => {
+  const result = await Contact.findById(req.params.id);
   if (!result) {
     throw httpError(404);
   }
@@ -17,12 +17,12 @@ const getContactById = async (req, res, next) => {
 }
 
 const addContact = async (req, res) => {
-  const result = await contactService.addContact(req.body)
+  const result = await Contact.create(req.body)
   res.status(201).json(result)
 }
 
 const deleteContact = async (req, res) => {
-  const result = await contactService.removeContact(req.params.id)
+  const result = await Contact.findByIdAndRemove(req.params.id)
   if (!result) {
     throw httpError(404);
   }
@@ -30,7 +30,17 @@ const deleteContact = async (req, res) => {
 }
 
 const updateContact = async (req, res) => {
-  const result = await contactService.updateContact(req.params.id, req.body);
+  console.log("request:", req.params.id, req.body);
+  const result = await Contact.findByIdAndUpdate(req.params.id, req.body, {new:true});
+  if (!result) {
+    throw httpError(404);
+  }
+  res.json(result);
+}
+
+const updateStatusContact  = async (req,res) => {
+    const result = await Contact.findByIdAndUpdate(req.params.id, req.body, {new:true});
+    console.log("result:", result);  
   if (!result) {
     throw httpError(404);
   }
@@ -42,5 +52,6 @@ export default {
   getContactById: ctrlWrapper(getContactById),
   addContact: ctrlWrapper(addContact),
   deleteContact: ctrlWrapper(deleteContact),
-  updateContact: ctrlWrapper(updateContact)
+  updateContact: ctrlWrapper(updateContact),
+  updateStatusContact:ctrlWrapper(updateStatusContact)
 }
