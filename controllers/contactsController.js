@@ -54,7 +54,6 @@ const updateContact = async (req, res) => {
 const updateStatusContact  = async (req, res) => {
   const {_id: owner} = req.user;
     const result = await Contact.findOneAndUpdate({owner, _id:req.params.id}, req.body, {new:true});
-  console.log(result);
     if (!result) {
     throw httpError(404);
   }
