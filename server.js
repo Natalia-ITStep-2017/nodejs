@@ -1,10 +1,8 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import app from './app.js';
 
-dotenv.config();
-
-const {DB_HOST, PORT} = process.env
+const {DB_HOST, PORT} = process.env;
 
 mongoose.connect(DB_HOST)
   .then(() =>{
@@ -16,8 +14,3 @@ mongoose.connect(DB_HOST)
   .catch((error) => {
     console.log(error.message);
     process.exit(1)})
-
-// 34KVifgbWDtb2fZZ Natalia
-
-// const [field, value] = Object.entries(error.keyValue)[0]
-// error.message = `Object wiwth ${field} ${value} is already exist` 

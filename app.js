@@ -2,6 +2,7 @@ import express, { json } from 'express'
 import logger from 'morgan'
 import cors from 'cors'
 
+import userRouter from './routes/api/userRouter.js'
 import contactsRouter from './routes/api/contactsRouter.js'
 
 const app = express()
@@ -12,6 +13,7 @@ app.use(logger(formatsLogger))
 app.use(cors())
 app.use(json())
 
+app.use('/users', userRouter)
 app.use('/api/contacts', contactsRouter)
 
 app.use((req, res) => {
