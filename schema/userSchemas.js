@@ -30,9 +30,17 @@ const bodySubscriptionSchema = Joi.object().keys({
   'any.required': 'missing field subscription'
 });
 
+const bodyVerifySchema = Joi.object().keys({
+ email: Joi.string().required()
+}).messages({
+  'any.required': 'missing field email'
+});
+
+
 export default {
   userRegisterSchema,
   userLoginSchema,
   bodySchema,
-  bodySubscriptionSchema
+  bodySubscriptionSchema, 
+  bodyVerifySchema
 }
