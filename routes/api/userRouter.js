@@ -8,6 +8,10 @@ const userRouter = Router();
 
 userRouter.post('/register', validateBody(userSchemas.bodySchema), validateBody(userSchemas.userRegisterSchema), userController.register);
 
+userRouter.get('/verify/:verificationToken',  userController.verify);
+
+userRouter.post('/verify', validateBody(userSchemas.bodySchema), validateBody(userSchemas.bodyVerifySchema), userController.resendEmail);
+
 userRouter.post('/login', validateBody(userSchemas.bodySchema), validateBody(userSchemas.userLoginSchema), userController.login);
 
 userRouter.get('/current', authenticate, userController.getUser);
